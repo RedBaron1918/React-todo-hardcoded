@@ -45,10 +45,9 @@ export default function App(){
         })
         setTasks(tasks.filter(task=>task.id !== id))
     }
-    //toggle reminder
     async function toggleReminder(id){
         const tasktoggle = await fetchTask(id)
-        const updt = {...tasktoggle,reminder:!tasktoggle.reminder}
+        const updt = {...tasktoggle,reminder: !tasktoggle.reminder}
         const res = await fetch(`http://localhost:5000/tasks/${id}`,{
             method: "PUT",
             headers: {
@@ -57,7 +56,11 @@ export default function App(){
             body: JSON.stringify(updt)
         })
         const data = await res.json()
-        setTasks(tasks.map(task=>task.id === id ? {...task,reminder:!data.reminder} : task))
+       setTasks(
+      tasks.map((task) =>
+        task.id === id ? { ...task, reminder: data.reminder } : task
+      )
+    )
     }
     return(
         <div className="container">
